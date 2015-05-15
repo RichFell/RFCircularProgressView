@@ -24,7 +24,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="circleWidth">
-                                        <real key="value" value="19"/>
+                                        <real key="value" value="23"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="mainLabelText" value="10"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percent">
@@ -34,12 +34,15 @@
                                         <color key="value" red="0.40000000596046448" green="0.40000000596046448" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="mainLabelTextColor">
-                                        <color key="value" name="controlLightHighlightColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="insetCircleWidth">
+                                        <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VwO-I6-giQ" customClass="RFProgressView">
-                                <rect key="frame" x="72" y="234" width="300" height="300"/>
+                                <rect key="frame" x="-57" y="20" width="300" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percent">

@@ -17,11 +17,14 @@ IB_DESIGNABLE
 @property IBInspectable UIColor *circleColor;
 @property IBInspectable CGFloat percent;
 
+@property IBInspectable BOOL hidesInsetCircle;
+@property IBInspectable UIColor *insetCircleColor;
+@property IBInspectable CGFloat insetCircleWidth;
+
 //Inspectables for the main label, so we can manipulate it in IB
 @property IBInspectable NSString *mainLabelText;
 @property IBInspectable UIColor *mainLabelTextColor;
-
-
+@property IBInspectable UIColor *mainLabelBackgroundColor;
 
 //Elements, or possible elements to be placed in the view
 @property UILabel *mainLabel;
