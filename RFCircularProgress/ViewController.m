@@ -23,12 +23,20 @@
     [super viewDidLoad];
 
     countdown = 0.0;
+    self.testLabel.percent = 0.0;
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:true];
 }
 
 -(void)drawBez {
-    [self.testLabel changePercent:++countdown];
-    countdown = countdown++;
+    if (countdown <= 60.0) {
+        [self.testLabel changePercent:++countdown];
+        countdown = countdown++;
+    }
+    else {
+        countdown = 0.0;
+        [self.testLabel changePercent:countdown];
+    }
+
 }
 
 @end

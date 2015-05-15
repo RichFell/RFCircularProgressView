@@ -89,7 +89,6 @@
         [insetCirclePath stroke];
 
     }
-    //We add this stroke after the inset so that it is over it.
 }
 
 -(void)layoutTopLabel {
@@ -113,12 +112,12 @@
 
 -(void)changePercent:(CGFloat)newPercent {
     CABasicAnimation *animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animateStrokeEnd.duration  = 100.0;
-    animateStrokeEnd.fromValue = [NSNumber numberWithFloat:self.percent/100];
-    animateStrokeEnd.toValue   = [NSNumber numberWithFloat:newPercent/100];
+    animateStrokeEnd.duration  = 1.0;
+    animateStrokeEnd.fromValue = [NSNumber numberWithFloat:self.percent/60];
+    animateStrokeEnd.toValue   = [NSNumber numberWithFloat:newPercent/60];
     [progressLayer addAnimation:animateStrokeEnd forKey:nil];
     self.percent = newPercent;
-    self.mainLabel.text = @"HI";
+    self.mainLabel.text = [NSString stringWithFormat:@"%.f", newPercent];
 }
 
 @end
