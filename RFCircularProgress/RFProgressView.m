@@ -15,18 +15,22 @@
     CGPoint centerPoint;
     BOOL hasBeenShown;
     UIBezierPath *circlePath;
+    CAShapeLayer *progressLayer;
 }
 
 -(void)awakeFromNib {
+    //prefer to call this here, as drawRect can be cumbersome.
     [self layoutTopLabel];
 }
 
 -(void)drawRect:(CGRect)rect {
     [super drawRect:rect];
+    //Have to call drawCircle here for it to show in IB
     [self drawCircle];
 }
 
 -(void)prepareForInterfaceBuilder {
+    //Adjusting backgroundColor and things is better done here than in drawRect
     [self layoutTopLabel];
 }
 
@@ -35,10 +39,12 @@
     [self layoutTopLabel];
 }
 
+//Draws the two circles using Belzier path.
 -(void)drawCircle {
-    float multiplier = 2 - ((self.percent / 100) * 2);
+    //Have to adjust to multiplier according to the percentage given
+//    float multiplier = 2 - ((self.percent / 100) * 2);
     startAngle = M_PI * 1.5;
-    endAngle = startAngle + (M_PI * multiplier);
+    endAngle = startAngle + (M_PI * 2);
 
     float circWidth = self.circleWidth ? self.circleWidth : 1.0;
 
@@ -50,6 +56,20 @@
                         endAngle:endAngle
                        clockwise:YES];
 
+    progressLayer = [[CAShapeLayer alloc] init];
+
+    [progressLayer setPath: circlePath.CGPath];
+
+    [progressLayer setStrokeColor:self.circleColor.CGColor];
+    [progressLayer setFillColor:[UIColor clearColor].CGColor];
+    [progressLayer setLineWidth:self.circleWidth];
+
+    [progressLayer setStrokeStart:0.0];
+    CGFloat strokeEnd = (self.percent / 100);
+    [progressLayer setStrokeEnd:strokeEnd];
+
+    [self.layer addSublayer:progressLayer];
+    //If set to show the insetCircle, then we want to dislay it
     if (!self.hidesInsetCircle) {
         startAngle = M_PI * 1.5;
         endAngle = startAngle + (M_PI * 2);
@@ -69,14 +89,11 @@
         [insetCirclePath stroke];
 
     }
-    
-    [circlePath setLineWidth:circWidth];
-    UIColor *setCircleColor = self.circleColor ? self.circleColor : [UIColor blackColor];
-    [setCircleColor setStroke];
-    [circlePath stroke];
+    //We add this stroke after the inset so that it is over it.
 }
 
 -(void)layoutTopLabel {
+    //Find the points so that the Label is centered in the View
     centerPoint = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2);
     CGFloat width = CGRectGetWidth(self.frame)/3;
     CGFloat height = CGRectGetHeight(self.frame)/3;
@@ -95,7 +112,13 @@
 
 
 -(void)changePercent:(CGFloat)newPercent {
+    CABasicAnimation *animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    animateStrokeEnd.duration  = 100.0;
+    animateStrokeEnd.fromValue = [NSNumber numberWithFloat:self.percent/100];
+    animateStrokeEnd.toValue   = [NSNumber numberWithFloat:newPercent/100];
+    [progressLayer addAnimation:animateStrokeEnd forKey:nil];
     self.percent = newPercent;
+    self.mainLabel.text = @"HI";
 }
 
 @end
