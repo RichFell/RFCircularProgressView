@@ -18,17 +18,16 @@
 }
 
 -(void)awakeFromNib {
-    self.backgroundColor = [UIColor clearColor];
+    [self layoutTopLabel];
 }
 
 -(void)drawRect:(CGRect)rect {
     [super drawRect:rect];
-    [self setup];
+    [self drawCircle];
 }
 
 -(void)prepareForInterfaceBuilder {
-    [self setup];
-    self.backgroundColor = [UIColor clearColor];
+    [self layoutTopLabel];
 }
 
 -(void)setup {
@@ -37,7 +36,6 @@
 }
 
 -(void)drawCircle {
-//    float subtraction = startAngle
     float multiplier = 2 - ((self.percent / 100) * 2);
     startAngle = M_PI * 1.5;
     endAngle = startAngle + (M_PI * multiplier);
@@ -65,16 +63,15 @@
     self.mainLabel.backgroundColor = [UIColor lightGrayColor];
     self.mainLabel.textColor = self.mainLabelTextColor;
     self.mainLabel.text = self.mainLabelText;
-//    self.mainLabel.text = [NSString stringWithFormat:@"%f, %f", startAngle, endAngle];
-//    self.mainLabel.numberOfLines = 0.0;
+    self.mainLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:30.0];
     self.mainLabel.textAlignment = NSTextAlignmentCenter;
+    self.backgroundColor = [UIColor clearColor];
     [self addSubview:self.mainLabel];
 }
 
 
 -(void)changePercent:(CGFloat)newPercent {
     self.percent = newPercent;
-//    [self drawCircle];
 }
 
 @end
