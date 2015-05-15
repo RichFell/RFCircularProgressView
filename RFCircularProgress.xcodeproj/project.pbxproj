@@ -20,8 +20,6 @@
 		9BA424C71B0660A800CB4E92 /* RFCircularProgressKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424C61B0660A800CB4E92 /* RFCircularProgressKitTests.m */; };
 		9BA424CA1B0660A800CB4E92 /* RFCircularProgressKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BA424B31B0660A800CB4E92 /* RFCircularProgressKit.framework */; };
 		9BA424CB1B0660A800CB4E92 /* RFCircularProgressKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BA424B31B0660A800CB4E92 /* RFCircularProgressKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9BA424D31B06613200CB4E92 /* RFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424AC1B055E7A00CB4E92 /* RFProgressView.m */; };
-		9BA424D51B0661EE00CB4E92 /* RFProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BA424AB1B055E7A00CB4E92 /* RFProgressView.h */; };
 		9BA424D61B0662F700CB4E92 /* RFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424AC1B055E7A00CB4E92 /* RFProgressView.m */; };
 /* End PBXBuildFile section */
 
@@ -158,6 +156,8 @@
 				9BA424861B055E3300CB4E92 /* AppDelegate.m */,
 				9BA4248B1B055E3400CB4E92 /* ViewController.h */,
 				9BA4248C1B055E3400CB4E92 /* ViewController.m */,
+				9BA424AB1B055E7A00CB4E92 /* RFProgressView.h */,
+				9BA424AC1B055E7A00CB4E92 /* RFProgressView.m */,
 				9BA4248E1B055E3400CB4E92 /* Main.storyboard */,
 				9BA424911B055E3400CB4E92 /* Images.xcassets */,
 				9BA424931B055E3400CB4E92 /* LaunchScreen.xib */,
@@ -196,8 +196,6 @@
 		9BA424AA1B055E4900CB4E92 /* CircularProgressElements */ = {
 			isa = PBXGroup;
 			children = (
-				9BA424AB1B055E7A00CB4E92 /* RFProgressView.h */,
-				9BA424AC1B055E7A00CB4E92 /* RFProgressView.m */,
 			);
 			name = CircularProgressElements;
 			path = ../RFCircularProgress;
@@ -245,7 +243,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BA424D51B0661EE00CB4E92 /* RFProgressView.h in Headers */,
 				9BA424B81B0660A800CB4E92 /* RFCircularProgressKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,7 +429,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BA424D31B06613200CB4E92 /* RFProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

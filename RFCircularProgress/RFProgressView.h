@@ -19,7 +19,6 @@ IB_DESIGNABLE
 
 //Inspectables for the main label, so we can manipulate it in IB
 @property IBInspectable NSString *mainLabelText;
-@property IBInspectable UIColor *mainLabelBackgroundColor;
 @property IBInspectable UIColor *mainLabelTextColor;
 
 
@@ -27,5 +26,7 @@ IB_DESIGNABLE
 //Elements, or possible elements to be placed in the view
 @property UILabel *mainLabel;
 
+//Instance methods
+-(void)changePercent:(CGFloat)newPercent;
 
 @end
