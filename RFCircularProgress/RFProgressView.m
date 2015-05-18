@@ -83,14 +83,10 @@
 
     //If set to show the insetCircle, then we want to dislay it
     if (!self.hidesInsetCircle) {
-        startAngle = M_PI * 1.5;
-        endAngle = startAngle + (M_PI * 2);
-
         float insetCircWidth = self.insetCircleWidth ? self.insetCircleWidth : 1.0;
 
-        if (!insetCirclePath) {
-                insetCirclePath = [UIBezierPath bezierPath];
-        }
+        insetCirclePath = [UIBezierPath bezierPath];
+
         [insetCirclePath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2,
                                                  CGRectGetHeight(self.frame)/2)
                               radius:CGRectGetWidth(self.frame)/2 - circWidth/2 - insetCircWidth/2
@@ -110,12 +106,11 @@
 -(void)layoutTopLabel {
     //Find the points so that the Label is centered in the View
     centerPoint = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2);
-    CGFloat width = CGRectGetWidth(self.frame)/3;
-    CGFloat height = CGRectGetHeight(self.frame)/3;
+    CGFloat width = CGRectGetWidth(self.frame)/2;
+    CGFloat height = CGRectGetHeight(self.frame)/2;
     CGFloat xOrigin = centerPoint.x - (width / 2);
     CGFloat yOrigin = centerPoint.y - (height / 2);
     self.mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOrigin, yOrigin, width, height)];
-    self.mainLabel.backgroundColor = [UIColor lightGrayColor];
     self.mainLabel.textColor = self.mainLabelTextColor ? self.mainLabelTextColor : [UIColor blackColor];
     self.mainLabel.text = self.mainLabelText;
     self.mainLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:self.labelFontSize ? self.labelFontSize : 30.0];
