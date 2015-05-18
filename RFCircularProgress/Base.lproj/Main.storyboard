@@ -24,11 +24,11 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="circleWidth">
-                                        <real key="value" value="23"/>
+                                        <real key="value" value="52"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="mainLabelText" value="10"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percent">
-                                        <real key="value" value="49"/>
+                                        <real key="value" value="83"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
                                         <color key="value" red="1" green="0.43529412150382996" blue="0.81176471710205078" alpha="1" colorSpace="calibratedRGB"/>
