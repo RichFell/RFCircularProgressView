@@ -34,18 +34,18 @@
     RFProgressView *prog = [[RFProgressView alloc]initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
     prog.circleColor = [UIColor blueColor];
     prog.circleWidth = 2.0; 
-    [prog changePercent:8.0 byDenominator:10.0];
+    [prog changePercent:8.0 byDenominator:10.0 withAnimationDuration:0.5];
     [self.view addSubview:prog];
 }
 
 -(void)drawBez {
     if (countdown < 10.0) {
-        [self.topView changePercent:++countdown byDenominator:10.0];
+        [self.topView changePercent:++countdown byDenominator:10.0 withAnimationDuration:0.5];
     }
     else {
         countdown = 0.0;
-        [self.topView changePercent:countdown byDenominator:60.0];
-        [self.bottomView changePercent:++bottomViewCount byDenominator:12.0];
+        [self.topView changePercent:countdown byDenominator:60.0 withAnimationDuration:0.0];
+        [self.bottomView changePercent:++bottomViewCount byDenominator:12.0 withAnimationDuration:0.5];
     }
 
 }

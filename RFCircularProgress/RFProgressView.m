@@ -110,14 +110,14 @@
     CGFloat height = CGRectGetHeight(self.frame)/2;
     CGFloat xOrigin = centerPoint.x - (width / 2);
     CGFloat yOrigin = centerPoint.y - (height / 2);
-    self.mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOrigin, yOrigin, width, height)];
-    self.mainLabel.textColor = self.mainLabelTextColor ? self.mainLabelTextColor : [UIColor blackColor];
-    self.mainLabel.text = self.mainLabelText;
-    self.mainLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:self.labelFontSize ? self.labelFontSize : 30.0];
-    self.mainLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOrigin, yOrigin, width, height)];
+    self.titleLabel.textColor = self.titleLabelTextColor ? self.titleLabelTextColor : [UIColor blackColor];
+    self.titleLabel.text = self.titleLabelText;
+    self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:self.titleLabelFontSize ? self.titleLabelFontSize : 30.0];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.backgroundColor = [UIColor clearColor];
-    self.mainLabel.backgroundColor = self.mainLabelBackgroundColor ? self.mainLabelBackgroundColor : [UIColor clearColor];
-    [self addSubview:self.mainLabel];
+    self.titleLabel.backgroundColor = self.titleLabelBackgroundColor ? self.titleLabelBackgroundColor : [UIColor clearColor];
+    [self addSubview:self.titleLabel];
 }
 
 /**
@@ -125,21 +125,21 @@
 
  :newPecent: New percent to move the progress bar to from scale of 0.0 to 1.0
  */
--(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator{
+-(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator withAnimationDuration:(CGFloat)duration{
     CABasicAnimation *animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animateStrokeEnd.duration  = numerator == denominator ? 0.0 : 0.5;
+    animateStrokeEnd.duration  = numerator == denominator ? 0.0 : duration;
     animateStrokeEnd.fromValue = @(self.percent);
     animateStrokeEnd.toValue   = [NSNumber numberWithFloat:numerator / denominator];
     animateStrokeEnd.fillMode = kCAFillModeBoth;
     [animateStrokeEnd setRemovedOnCompletion:NO];
     [progressLayer addAnimation:animateStrokeEnd forKey:nil];
     self.percent = numerator/denominator;
-    self.mainLabel.text = [NSString stringWithFormat:@"%.f", numerator];
+    self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
 }
 
 -(void)setStartingPercent:(CGFloat)numerator byDenominator:(CGFloat)denominator {
     self.percent = numerator/denominator;
-    self.mainLabel.text = [NSString stringWithFormat:@"%.f", numerator];
+    self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
     [self drawCircle];
 }
 

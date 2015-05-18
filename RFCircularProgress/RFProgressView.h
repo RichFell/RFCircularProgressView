@@ -22,16 +22,27 @@ IB_DESIGNABLE
 @property IBInspectable CGFloat insetCircleWidth;
 
 //Inspectables for the main label, so we can manipulate it in IB
-@property IBInspectable NSString *mainLabelText;
-@property IBInspectable UIColor *mainLabelTextColor;
-@property IBInspectable UIColor *mainLabelBackgroundColor;
-@property IBInspectable float labelFontSize;
+@property IBInspectable NSString *titleLabelText;
+@property IBInspectable UIColor *titleLabelTextColor;
+@property IBInspectable UIColor *titleLabelBackgroundColor;
+@property IBInspectable float titleLabelFontSize;
 
 //Elements, or possible elements to be placed in the view
-@property UILabel *mainLabel;
+@property UILabel *titleLabel;
 
-//Instance methods
--(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator;
+/**
+ Description: Call to change the percentage of completion shown on the progress view to match the numerator divided by the denominator. Also will animate according to the Duration
+ 
+ :numerator: The current number representing the amount completed
+ 
+ :denominator: The total number of to decide how to find percent completion
+ 
+ :duration: The desired duration of the animation
+ */
+-(void)changePercent:(CGFloat)numerator
+       byDenominator:(CGFloat)denominator
+withAnimationDuration:(CGFloat)duration;
+
 -(void)setStartingPercent: (CGFloat)numerator byDenominator:(CGFloat)denominator;
 
 @end
