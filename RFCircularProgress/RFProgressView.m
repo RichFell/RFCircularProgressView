@@ -51,22 +51,22 @@
 
 //Draws the two circles using Belzier path.
 -(void)drawCircle {
-    //Have to adjust to multiplier according to the percentage given
+    //Use these angles in order to create the circular path our CAShapeLayer will follow
     startAngle = M_PI * 1.5;
-    endAngle = startAngle + (M_PI * ((self.percent/100) * 2));
+    endAngle = startAngle + (M_PI * 2);
 
     float circWidth = self.circleWidth ? self.circleWidth : 1.0;
 
-    circlePath = [UIBezierPath bezierPath];
+    circlePath = circlePath ? circlePath : [UIBezierPath bezierPath];
 
     [circlePath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2,
-                                         CGRectGetHeight(self.frame)/2)
-                      radius:CGRectGetWidth(self.frame)/2 - circWidth/2
+                                             CGRectGetHeight(self.frame)/2)
+                          radius:CGRectGetWidth(self.frame)/2 - circWidth/2
                       startAngle:startAngle
                         endAngle:endAngle
                        clockwise:YES];
 
-    progressLayer = [[CAShapeLayer alloc] init];
+    progressLayer = progressLayer ? progressLayer : [[CAShapeLayer alloc] init];            //If have already been initialized, create the CAShapeLayer
 
     [progressLayer setPath: circlePath.CGPath];
 
