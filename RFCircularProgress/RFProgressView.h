@@ -25,11 +25,13 @@ IB_DESIGNABLE
 @property IBInspectable NSString *mainLabelText;
 @property IBInspectable UIColor *mainLabelTextColor;
 @property IBInspectable UIColor *mainLabelBackgroundColor;
+@property IBInspectable float labelFontSize;
 
 //Elements, or possible elements to be placed in the view
 @property UILabel *mainLabel;
 
 //Instance methods
--(void)changePercent:(CGFloat)newPercent;
+-(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator;
+-(void)setStartingPercent: (CGFloat)numerator byDenominator:(CGFloat)denominator;
 
 @end

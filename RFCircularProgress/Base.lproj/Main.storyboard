@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XUd-bT-Qk3" customClass="RFProgressView">
-                                <rect key="frame" x="150" y="150" width="300" height="300"/>
+                                <rect key="frame" x="150" y="20" width="300" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="aCq-7p-9bY"/>
-                                    <constraint firstAttribute="width" constant="300" id="m13-HV-RxB"/>
+                                    <constraint firstAttribute="height" constant="300" id="Vj0-lZ-9K9"/>
+                                    <constraint firstAttribute="width" constant="300" id="ewt-TS-396"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="circleWidth">
@@ -28,22 +28,35 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="mainLabelText" value="10"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percent">
-                                        <real key="value" value="50"/>
+                                        <real key="value" value="49"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                        <color key="value" red="0.88011153600000003" green="0.6456608452" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="1" green="0.43529412150382996" blue="0.81176471710205078" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="mainLabelTextColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="insetCircleWidth">
-                                        <real key="value" value="1"/>
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="labelFontSize">
+                                        <real key="value" value="75"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="mainLabelBackgroundColor">
+                                        <color key="value" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="insetCircleColor">
+                                        <color key="value" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VwO-I6-giQ" customClass="RFProgressView">
-                                <rect key="frame" x="-57" y="20" width="300" height="300"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VwO-I6-giQ" customClass="RFProgressView">
+                                <rect key="frame" x="200" y="343" width="200" height="200"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="7Gc-iE-IVO"/>
+                                    <constraint firstAttribute="height" constant="200" id="mTP-lC-WXv"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percent">
                                         <real key="value" value="68"/>
@@ -53,23 +66,38 @@
                                         <real key="value" value="17"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                        <color key="value" red="1" green="0.40000000596046448" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.16078431904315948" green="0.10588236153125763" blue="0.58431375026702881" alpha="1" colorSpace="deviceRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="mainLabelTextColor">
-                                        <color key="value" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.98431378602981567" green="0.43921571969985962" blue="0.17254902422428131" alpha="1" colorSpace="deviceRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="hidesInsetCircle" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KLa-t0-Q5T">
+                                <rect key="frame" x="277" y="550" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="6hZ-Cj-XY4"/>
+                                    <constraint firstAttribute="width" constant="46" id="gHQ-qX-tKh"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="XUd-bT-Qk3" secondAttribute="centerX" id="Wda-Wg-ucx"/>
-                            <constraint firstAttribute="centerY" secondItem="XUd-bT-Qk3" secondAttribute="centerY" id="jgf-Rf-O8h"/>
+                            <constraint firstItem="KLa-t0-Q5T" firstAttribute="top" secondItem="VwO-I6-giQ" secondAttribute="bottom" constant="7" id="Aow-N2-baN"/>
+                            <constraint firstItem="VwO-I6-giQ" firstAttribute="top" secondItem="XUd-bT-Qk3" secondAttribute="bottom" constant="23" id="JvB-w3-wKF"/>
+                            <constraint firstAttribute="centerX" secondItem="VwO-I6-giQ" secondAttribute="centerX" id="Zwr-y3-F1p"/>
+                            <constraint firstItem="XUd-bT-Qk3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="btg-vF-ZFY"/>
+                            <constraint firstAttribute="centerX" secondItem="XUd-bT-Qk3" secondAttribute="centerX" id="ljI-AN-1ou"/>
+                            <constraint firstAttribute="centerX" secondItem="KLa-t0-Q5T" secondAttribute="centerX" id="s1o-sg-oy1"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="testLabel" destination="XUd-bT-Qk3" id="sh6-yt-YHo"/>
+                        <outlet property="bottomView" destination="VwO-I6-giQ" id="FyK-bZ-M3a"/>
+                        <outlet property="topView" destination="XUd-bT-Qk3" id="O4J-aY-WMR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

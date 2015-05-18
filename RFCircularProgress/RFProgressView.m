@@ -16,9 +16,11 @@
     BOOL hasBeenShown;
     UIBezierPath *circlePath;
     CAShapeLayer *progressLayer;
+    UIBezierPath *insetCirclePath;
 }
 
 -(void)awakeFromNib {
+    [super awakeFromNib];
     //prefer to call this here, as drawRect can be cumbersome.
     [self layoutTopLabel];
 }
@@ -34,6 +36,14 @@
     [self layoutTopLabel];
 }
 
+-(instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
 -(void)setup {
     [self drawCircle];
     [self layoutTopLabel];
@@ -42,33 +52,39 @@
 //Draws the two circles using Belzier path.
 -(void)drawCircle {
     //Have to adjust to multiplier according to the percentage given
-//    float multiplier = 2 - ((self.percent / 100) * 2);
     startAngle = M_PI * 1.5;
     endAngle = startAngle + (M_PI * 2);
 
     float circWidth = self.circleWidth ? self.circleWidth : 1.0;
 
-    circlePath = [UIBezierPath bezierPath];
-    [circlePath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2,
+    if (!circlePath) {
+        circlePath = [UIBezierPath bezierPath];
+
+        [circlePath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2,
                                              CGRectGetHeight(self.frame)/2)
                           radius:CGRectGetWidth(self.frame)/2 - circWidth
                       startAngle:startAngle
                         endAngle:endAngle
                        clockwise:YES];
+    }
 
-    progressLayer = [[CAShapeLayer alloc] init];
+    if (!progressLayer) {
+        progressLayer = [[CAShapeLayer alloc] init];
 
-    [progressLayer setPath: circlePath.CGPath];
+        [progressLayer setPath: circlePath.CGPath];
 
-    [progressLayer setStrokeColor:self.circleColor.CGColor];
-    [progressLayer setFillColor:[UIColor clearColor].CGColor];
-    [progressLayer setLineWidth:self.circleWidth];
+        [progressLayer setStrokeColor:self.circleColor.CGColor];
+        [progressLayer setFillColor:[UIColor clearColor].CGColor];
+        [progressLayer setLineWidth:self.circleWidth];
 
-    [progressLayer setStrokeStart:0.0];
-    CGFloat strokeEnd = (self.percent / 100);
-    [progressLayer setStrokeEnd:strokeEnd];
+        [progressLayer setStrokeStart:0.0];
 
-    [self.layer addSublayer:progressLayer];
+        CGFloat strokeEnd = self.percent > 1.0 ? self.percent/100 : self.percent;
+        [progressLayer setStrokeEnd:strokeEnd];
+
+        [self.layer addSublayer:progressLayer];
+    }
+
     //If set to show the insetCircle, then we want to dislay it
     if (!self.hidesInsetCircle) {
         startAngle = M_PI * 1.5;
@@ -76,10 +92,12 @@
 
         float insetCircWidth = self.insetCircleWidth ? self.insetCircleWidth : 1.0;
 
-        UIBezierPath *insetCirclePath = [UIBezierPath bezierPath];
+        if (!insetCirclePath) {
+                insetCirclePath = [UIBezierPath bezierPath];
+        }
         [insetCirclePath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2,
                                                  CGRectGetHeight(self.frame)/2)
-                              radius:CGRectGetWidth(self.frame)/2 - circWidth/2 - 10
+                              radius:CGRectGetWidth(self.frame)/2 - circWidth - insetCircWidth/2
                           startAngle:startAngle
                             endAngle:endAngle
                            clockwise:YES];
@@ -87,10 +105,12 @@
         UIColor *setCircleColor = self.insetCircleColor ? self.insetCircleColor : [UIColor blackColor];
         [setCircleColor setStroke];
         [insetCirclePath stroke];
-
     }
 }
 
+/**
+ Description: Add, and layout the center label
+ */
 -(void)layoutTopLabel {
     //Find the points so that the Label is centered in the View
     centerPoint = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2);
@@ -102,22 +122,34 @@
     self.mainLabel.backgroundColor = [UIColor lightGrayColor];
     self.mainLabel.textColor = self.mainLabelTextColor ? self.mainLabelTextColor : [UIColor blackColor];
     self.mainLabel.text = self.mainLabelText;
-    self.mainLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:30.0];
+    self.mainLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:self.labelFontSize ? self.labelFontSize : 30.0];
     self.mainLabel.textAlignment = NSTextAlignmentCenter;
     self.backgroundColor = [UIColor clearColor];
     self.mainLabel.backgroundColor = self.mainLabelBackgroundColor ? self.mainLabelBackgroundColor : [UIColor clearColor];
     [self addSubview:self.mainLabel];
 }
 
+/**
+ Description: Animates the Progress bar to the passed in percent
 
--(void)changePercent:(CGFloat)newPercent {
+ :newPecent: New percent to move the progress bar to from scale of 0.0 to 1.0
+ */
+-(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator{
     CABasicAnimation *animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animateStrokeEnd.duration  = 1.0;
-    animateStrokeEnd.fromValue = [NSNumber numberWithFloat:self.percent/60];
-    animateStrokeEnd.toValue   = [NSNumber numberWithFloat:newPercent/60];
+    animateStrokeEnd.duration  = numerator == denominator ? 0.0 : 0.1;
+    animateStrokeEnd.fromValue = @(self.percent);
+    animateStrokeEnd.toValue   = [NSNumber numberWithFloat:numerator / denominator];
+    animateStrokeEnd.fillMode = kCAFillModeBoth;
+    [animateStrokeEnd setRemovedOnCompletion:NO];
     [progressLayer addAnimation:animateStrokeEnd forKey:nil];
-    self.percent = newPercent;
-    self.mainLabel.text = [NSString stringWithFormat:@"%.f", newPercent];
+    self.percent = numerator/denominator;
+    self.mainLabel.text = [NSString stringWithFormat:@"%.f", numerator];
+}
+
+-(void)setStartingPercent:(CGFloat)numerator byDenominator:(CGFloat)denominator {
+    self.percent = numerator/denominator;
+    self.mainLabel.text = [NSString stringWithFormat:@"%.f", numerator];
+    [self drawCircle];
 }
 
 @end
