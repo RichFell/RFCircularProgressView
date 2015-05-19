@@ -21,6 +21,8 @@
     CGFloat bottomViewCount;
 }
 
+static CGFloat const denominator = 60.0;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -28,7 +30,6 @@
     bottomViewCount = 3.0;
 
     self.topView.percent = 0.0;
-    [self.bottomView setStartingPercent:8.0 byDenominator:12.0];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:YES];
 
     RFProgressView *prog = [[RFProgressView alloc]initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
@@ -39,13 +40,13 @@
 }
 
 -(void)drawBez {
-    if (countdown < 10.0) {
-        [self.topView changePercent:++countdown byDenominator:10.0 withAnimationDuration:0.5];
+    if (countdown <= denominator) {
+        [self.topView changePercent:countdown++ byDenominator:denominator withAnimationDuration:1.0];
     }
     else {
         countdown = 0.0;
-        [self.topView changePercent:countdown byDenominator:60.0 withAnimationDuration:0.0];
-        [self.bottomView changePercent:++bottomViewCount byDenominator:12.0 withAnimationDuration:0.5];
+        [self.topView changePercent:countdown byDenominator:denominator withAnimationDuration:0.0];
+        [self.bottomView changePercent:bottomViewCount++ byDenominator:12.0 withAnimationDuration:60.0];
     }
 
 }

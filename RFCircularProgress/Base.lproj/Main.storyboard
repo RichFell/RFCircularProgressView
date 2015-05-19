@@ -59,7 +59,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percent">
-                                        <real key="value" value="68"/>
+                                        <real key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="mainLabelText" value="Some"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="circleWidth">
