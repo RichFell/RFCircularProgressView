@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "RFProgressView.h"
+@import RFCircularProgressKit;
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet RFProgressView *topView;
@@ -27,7 +27,7 @@
     countdown = 0.0;
     bottomViewCount = 3.0;
 
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:YES];
+//    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:YES];
 
 //    [newTimer fire];
     RFProgressView *prog = [[RFProgressView alloc]initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];

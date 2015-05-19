@@ -20,6 +20,7 @@
     CGFloat startPoint;
     BOOL filling;
     CGFloat percent;
+    BOOL inIB;
 }
 
 -(void)awakeFromNib {
@@ -36,6 +37,7 @@
 
 -(void)prepareForInterfaceBuilder {
     //Adjusting backgroundColor and things is better done here than in drawRect
+    inIB = true;
     [self layoutTopLabel];
 }
 
@@ -57,12 +59,11 @@
     //Use these angles in order to create the circular path our CAShapeLayer will follow
     startAngle = M_PI * 1.5;
     endAngle = startAngle + (M_PI * 2);
-    startPoint = 0.0;
     filling = YES;
 
     float circWidth = self.circleWidth ? self.circleWidth : 1.0;
 
-    circlePath = circlePath ? circlePath : [UIBezierPath bezierPath];
+    circlePath = [UIBezierPath bezierPath];
 
     [circlePath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2,
                                              CGRectGetHeight(self.frame)/2)
@@ -71,21 +72,7 @@
                         endAngle:endAngle
                        clockwise:YES];
 
-    progressLayer = [[CAShapeLayer alloc] init];
-
-    [progressLayer setPath: circlePath.CGPath];
-
-    [progressLayer setStrokeColor:self.circleColor.CGColor];
-    [progressLayer setFillColor:[UIColor clearColor].CGColor];
-    [progressLayer setLineWidth:self.circleWidth];
-
-    [progressLayer setStrokeStart:0.0];
-
-    percent = self.currentValue ? self.currentValue/self.totalValue : 1.0;
-    [progressLayer setStrokeEnd:percent];
-
-    [self.layer addSublayer:progressLayer];
-
+    [self addCALayerToPath:circlePath];
     //If set to show the insetCircle, then we want to dislay it
     if (!self.hidesInsetCircle) {
         float insetCircWidth = self.insetCircleWidth ? self.insetCircleWidth : 1.0;
@@ -103,6 +90,24 @@
         [setCircleColor setStroke];
         [insetCirclePath stroke];
     }
+}
+
+-(void)addCALayerToPath:(UIBezierPath *)path {
+    progressLayer = [[CAShapeLayer alloc] init];
+
+    [progressLayer setPath: circlePath.CGPath];
+
+    [progressLayer setStrokeColor:self.circleColor.CGColor];
+    [progressLayer setFillColor:[UIColor clearColor].CGColor];
+    [progressLayer setLineWidth:self.circleWidth];
+
+    [progressLayer setStrokeStart:0.0];
+
+    percent = inIB ? self.currentValue/self.totalValue : 0.0;
+    [progressLayer setStrokeEnd:percent];
+
+    [self.layer addSublayer:progressLayer];
+
 }
 
 /**
@@ -131,18 +136,17 @@
  :newPecent: New percent to move the progress bar to from scale of 0.0 to 1.0
  */
 -(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration{
-    if (value) {
-        self.currentValue = value;
-        [self addAnimationWithDuration:duration];
-        self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
 
-        if (self.currentValue == self.totalValue) {
-            filling = !filling;
-            if (filling) {
-                [progressLayer setStrokeStart:0.0];
-            }
+    self.currentValue = value;
+    [self addAnimationWithDuration:duration];
+    self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
+
+    if (self.currentValue == self.totalValue) {
+        if (!filling) {
         }
+        filling = !filling;
     }
+
 
 }
 
@@ -161,10 +165,40 @@
     percent = self.currentValue/self.totalValue;
     animateStroke.toValue = @(percent);
     [animateStroke setRemovedOnCompletion:NO];
+    animateStroke.delegate = self;
     [progressLayer addAnimation:animateStroke forKey:nil];
-
 }
 
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if (flag) {
+        if (percent == 1.0 && filling) {
+            [progressLayer removeFromSuperlayer];
+            progressLayer = nil;
+            percent = 0.0;
+            [self addCALayerToPath:circlePath];
+//            CABasicAnimation *basicAnim = (CABasicAnimation *)anim;
+//            [basicAnim setValue:@(0.0) forKey:@"strokeStart"];
+        }
+    }
+}
+
+//-(void)animationDidStart:(CAAnimation *)anim {
+//
+//}
+//-(void)reset
+//{
+//    CABasicAnimation *endAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+//    endAnimation.duration = 0.0;
+//    endAnimation.toValue = @(0.0);
+//    [endAnimation setRemovedOnCompletion:YES];
+//    [progressLayer addAnimation:endAnimation forKey:nil];
+//
+//    CABasicAnimation *startAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+//    startAnimation.duration = 0.0;
+//    startAnimation.toValue = @(0.0);
+//    [startAnimation setRemovedOnCompletion:YES];
+//    [progressLayer addAnimation:startAnimation forKey:nil];
+//}
 -(void)setStartingPercent:(CGFloat)numerator byDenominator:(CGFloat)denominator {
     percent = numerator/denominator;
     self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];

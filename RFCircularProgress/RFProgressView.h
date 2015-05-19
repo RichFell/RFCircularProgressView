@@ -11,7 +11,6 @@
 IB_DESIGNABLE
 @interface RFProgressView : UIView
 
-
 //Inspecatbles for the Circle
 @property IBInspectable CGFloat circleWidth;
 @property IBInspectable UIColor *circleColor;

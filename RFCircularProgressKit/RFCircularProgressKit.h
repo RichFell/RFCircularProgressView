@@ -17,4 +17,4 @@ FOUNDATION_EXPORT const unsigned char RFCircularProgressKitVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <RFCircularProgressKit/PublicHeader.h>
 
 
-
+#import "RFProgressView.h"
