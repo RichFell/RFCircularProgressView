@@ -19,6 +19,7 @@
     UIBezierPath *insetCirclePath;
     CGFloat startPoint;
     BOOL filling;
+    CGFloat percent;
 }
 
 -(void)awakeFromNib {
@@ -70,7 +71,7 @@
                         endAngle:endAngle
                        clockwise:YES];
 
-    progressLayer = progressLayer ? progressLayer : [[CAShapeLayer alloc] init];            //If have already been initialized, create the CAShapeLayer
+    progressLayer = [[CAShapeLayer alloc] init];
 
     [progressLayer setPath: circlePath.CGPath];
 
@@ -80,8 +81,8 @@
 
     [progressLayer setStrokeStart:0.0];
 
-    CGFloat strokeEnd = self.percent > 1.0 ? self.percent/100 : self.percent;
-    [progressLayer setStrokeEnd:strokeEnd];
+    percent = self.currentValue ? self.currentValue/self.totalValue : 1.0;
+    [progressLayer setStrokeEnd:percent];
 
     [self.layer addSublayer:progressLayer];
 
@@ -129,21 +130,21 @@
 
  :newPecent: New percent to move the progress bar to from scale of 0.0 to 1.0
  */
--(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator withAnimationDuration:(CGFloat)duration{
-    NSLog(@"2: %.f", numerator);
-    if (numerator) {
+-(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration{
+    NSLog(@"2: %.f", value);
+    if (value) {
         
-        [self addAnimation:numerator byDenominator:denominator withDuration:duration];
-        self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
+        [self addAnimationToValue:value withDuration:duration];
+        self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
 
-        if (numerator == denominator) {
+        if (value == self.totalValue) {
             filling = !filling;
         }
     }
 
 }
 
--(void)addAnimation:(CGFloat)numerator byDenominator:(CGFloat)denominator withDuration:(CGFloat)duration {
+-(void)addAnimationToValue:(CGFloat)value withDuration:(CGFloat)duration {
     CABasicAnimation *animateStrokeEnd;
     if (filling) {
         animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
@@ -151,11 +152,11 @@
     else {
         animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
     }
-    animateStrokeEnd.duration  = numerator == denominator ? 0.0 : duration;
-    startPoint = self.percent == 1.0 ? 0.0 : self.percent;
+    animateStrokeEnd.duration = value == self.totalValue ? 0.0 : duration;
+    startPoint = percent == 1.0 ? 0.0 : percent;
     animateStrokeEnd.fromValue = @(startPoint);
-    self.percent = numerator/denominator;
-    animateStrokeEnd.toValue   = @(self.percent);
+    percent = value/self.totalValue;
+    animateStrokeEnd.toValue   = @(percent);
     animateStrokeEnd.fillMode = kCAFillModeBoth;
     [animateStrokeEnd setRemovedOnCompletion:NO];
     [progressLayer addAnimation:animateStrokeEnd forKey:nil];
@@ -163,7 +164,7 @@
 }
 
 -(void)setStartingPercent:(CGFloat)numerator byDenominator:(CGFloat)denominator {
-    self.percent = numerator/denominator;
+    percent = numerator/denominator;
     self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
     [self drawCircle];
 }

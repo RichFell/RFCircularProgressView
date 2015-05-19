@@ -15,7 +15,8 @@ IB_DESIGNABLE
 //Inspecatbles for the Circle
 @property IBInspectable CGFloat circleWidth;
 @property IBInspectable UIColor *circleColor;
-@property IBInspectable CGFloat percent;
+@property IBInspectable float totalValue;
+@property IBInspectable float currentValue;
 
 @property IBInspectable BOOL hidesInsetCircle;
 @property IBInspectable UIColor *insetCircleColor;
@@ -39,9 +40,7 @@ IB_DESIGNABLE
  
  :duration: The desired duration of the animation
  */
--(void)changePercent:(CGFloat)numerator
-       byDenominator:(CGFloat)denominator
-withAnimationDuration:(CGFloat)duration;
+-(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration;
 
 -(void)setStartingPercent: (CGFloat)numerator byDenominator:(CGFloat)denominator;
 
