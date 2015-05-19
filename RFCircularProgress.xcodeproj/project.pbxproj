@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9BA424841B055E3300CB4E92 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424831B055E3300CB4E92 /* main.m */; };
 		9BA424871B055E3300CB4E92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424861B055E3300CB4E92 /* AppDelegate.m */; };
-		9BA4248A1B055E3400CB4E92 /* RFCircularProgress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424881B055E3300CB4E92 /* RFCircularProgress.xcdatamodeld */; };
 		9BA4248D1B055E3400CB4E92 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA4248C1B055E3400CB4E92 /* ViewController.m */; };
 		9BA424901B055E3400CB4E92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BA4248E1B055E3400CB4E92 /* Main.storyboard */; };
 		9BA424921B055E3400CB4E92 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA424911B055E3400CB4E92 /* Images.xcassets */; };
@@ -74,7 +73,6 @@
 		9BA424831B055E3300CB4E92 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9BA424851B055E3300CB4E92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BA424861B055E3300CB4E92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9BA424891B055E3300CB4E92 /* RFCircularProgress.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RFCircularProgress.xcdatamodel; sourceTree = "<group>"; };
 		9BA4248B1B055E3400CB4E92 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9BA4248C1B055E3400CB4E92 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9BA4248F1B055E3400CB4E92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				9BA4248E1B055E3400CB4E92 /* Main.storyboard */,
 				9BA424911B055E3400CB4E92 /* Images.xcassets */,
 				9BA424931B055E3400CB4E92 /* LaunchScreen.xib */,
-				9BA424881B055E3300CB4E92 /* RFCircularProgress.xcdatamodeld */,
 				9BA424811B055E3300CB4E92 /* Supporting Files */,
 			);
 			path = RFCircularProgress;
@@ -410,7 +407,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BA424D61B0662F700CB4E92 /* RFProgressView.m in Sources */,
-				9BA4248A1B055E3400CB4E92 /* RFCircularProgress.xcdatamodeld in Sources */,
 				9BA424871B055E3300CB4E92 /* AppDelegate.m in Sources */,
 				9BA4248D1B055E3400CB4E92 /* ViewController.m in Sources */,
 				9BA424841B055E3300CB4E92 /* main.m in Sources */,
@@ -712,6 +708,7 @@
 				9BA424A61B055E3400CB4E92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BA424A71B055E3400CB4E92 /* Build configuration list for PBXNativeTarget "RFCircularProgressTests" */ = {
 			isa = XCConfigurationList;
@@ -720,6 +717,7 @@
 				9BA424A91B055E3400CB4E92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BA424CC1B0660A800CB4E92 /* Build configuration list for PBXNativeTarget "RFCircularProgressKit" */ = {
 			isa = XCConfigurationList;
@@ -728,6 +726,7 @@
 				9BA424CE1B0660A800CB4E92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BA424D01B0660A800CB4E92 /* Build configuration list for PBXNativeTarget "RFCircularProgressKitTests" */ = {
 			isa = XCConfigurationList;
@@ -736,21 +735,9 @@
 				9BA424D21B0660A800CB4E92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		9BA424881B055E3300CB4E92 /* RFCircularProgress.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				9BA424891B055E3300CB4E92 /* RFCircularProgress.xcdatamodel */,
-			);
-			currentVersion = 9BA424891B055E3300CB4E92 /* RFCircularProgress.xcdatamodel */;
-			path = RFCircularProgress.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 9BA424761B055E3300CB4E92 /* Project object */;
 }
