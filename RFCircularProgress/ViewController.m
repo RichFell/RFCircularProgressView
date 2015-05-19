@@ -21,7 +21,7 @@
     CGFloat bottomViewCount;
 }
 
-static CGFloat const denominator = 60.0;
+static CGFloat const denominator = 10.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,13 +40,12 @@ static CGFloat const denominator = 60.0;
 }
 
 -(void)drawBez {
-    if (countdown <= denominator) {
-        [self.topView changePercent:countdown++ byDenominator:denominator withAnimationDuration:1.0];
+    if (countdown < denominator) {
+        [self.topView changePercent:++countdown byDenominator:denominator withAnimationDuration:1.0];
     }
     else {
         countdown = 0.0;
-        [self.topView changePercent:countdown byDenominator:denominator withAnimationDuration:0.0];
-        [self.bottomView changePercent:bottomViewCount++ byDenominator:12.0 withAnimationDuration:60.0];
+        [self.bottomView changePercent:++bottomViewCount byDenominator:12.0 withAnimationDuration:60.0];
     }
 
 }
