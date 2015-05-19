@@ -34,6 +34,7 @@
     prog.circleColor = [UIColor blueColor];
     prog.circleWidth = 2.0;
     self.topView.totalValue = 2.0;
+    self.topView.currentValue = 1.0;
 //    [prog changePercent:8.0 byDenominator:10.0 withAnimationDuration:0.5];
     [self.view addSubview:prog];
 }

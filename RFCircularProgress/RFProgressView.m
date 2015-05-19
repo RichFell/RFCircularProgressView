@@ -54,13 +54,14 @@
     [self layoutTopLabel];
 }
 
+#pragma mark - Methods for drawing on the View
+
 //Draws the two circles using Belzier path.
 -(void)drawCircle {
     //Use these angles in order to create the circular path our CAShapeLayer will follow
     startAngle = M_PI * 1.5;
     endAngle = startAngle + (M_PI * 2);
     filling = YES;
-
     float circWidth = self.circleWidth ? self.circleWidth : 1.0;
 
     circlePath = [UIBezierPath bezierPath];
@@ -72,42 +73,24 @@
                         endAngle:endAngle
                        clockwise:YES];
 
-    [self addCALayerToPath:circlePath];
-    //If set to show the insetCircle, then we want to dislay it
     if (!self.hidesInsetCircle) {
         float insetCircWidth = self.insetCircleWidth ? self.insetCircleWidth : 1.0;
 
         insetCirclePath = [UIBezierPath bezierPath];
 
         [insetCirclePath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2,
-                                                 CGRectGetHeight(self.frame)/2)
-                              radius:CGRectGetWidth(self.frame)/2 - circWidth/2 - insetCircWidth/2
-                          startAngle:startAngle
-                            endAngle:endAngle
-                           clockwise:YES];
+                                                      CGRectGetHeight(self.frame)/2)
+                                   radius:CGRectGetWidth(self.frame)/2 - circWidth/2 - insetCircWidth/2
+                               startAngle:startAngle
+                                 endAngle:endAngle
+                                clockwise:YES];
         [insetCirclePath setLineWidth:insetCircWidth];
-        UIColor *setCircleColor = self.insetCircleColor ? self.insetCircleColor : [UIColor blackColor];
-        [setCircleColor setStroke];
-        [insetCirclePath stroke];
+
+        [self addLayerToPath:insetCirclePath withLayer:[CAShapeLayer new] withColor:self.insetCircleColor andWidth:self.insetCircleWidth andPercentCompleted:1.0];
     }
-}
 
--(void)addCALayerToPath:(UIBezierPath *)path {
-    progressLayer = [[CAShapeLayer alloc] init];
-
-    [progressLayer setPath: circlePath.CGPath];
-
-    [progressLayer setStrokeColor:self.circleColor.CGColor];
-    [progressLayer setFillColor:[UIColor clearColor].CGColor];
-    [progressLayer setLineWidth:self.circleWidth];
-
-    [progressLayer setStrokeStart:0.0];
-
-    percent = inIB ? self.currentValue/self.totalValue : 0.0;
-    [progressLayer setStrokeEnd:percent];
-
-    [self.layer addSublayer:progressLayer];
-
+    //Have to add this after the inset, or the insetCircle will be on top of the progressLayer
+    [self addProgressLayer];
 }
 
 /**
@@ -130,10 +113,13 @@
     [self addSubview:self.titleLabel];
 }
 
+#pragma mark - Instance Method for animating the completion
 /**
  Description: Animates the Progress bar to the given percent
 
- :newPecent: New percent to move the progress bar to from scale of 0.0 to 1.0
+ :value: The Value you want the progressView to animate to
+
+ :duration: The duration of the desired animation
  */
 -(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration{
 
@@ -142,14 +128,31 @@
     self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
 
     if (self.currentValue == self.totalValue) {
-        if (!filling) {
-        }
         filling = !filling;
     }
+}
 
+#pragma mark - Methods for drawing a layer on top of the Bezier path
+-(void)addProgressLayer {
+    progressLayer = [[CAShapeLayer alloc] init];
+
+    CGFloat complete = inIB ? self.currentValue/self.totalValue : 0.0;
+    [self addLayerToPath:circlePath withLayer:progressLayer withColor:self.circleColor andWidth:self.circleWidth andPercentCompleted: complete];
 
 }
 
+-(void)addLayerToPath:(UIBezierPath *)path withLayer:(CAShapeLayer *)layer withColor:(UIColor *)color andWidth:(CGFloat)width andPercentCompleted:(CGFloat)percentage {
+    [layer setPath: path.CGPath];
+    [layer setStrokeColor:color.CGColor];
+    [layer setFillColor:[UIColor clearColor].CGColor];
+    [layer setLineWidth:width];
+    [layer setStrokeStart:0.0];
+    [layer setStrokeEnd:percentage];
+
+    [self.layer addSublayer:layer];
+}
+
+#pragma mark - methods to help with the animation
 -(void)addAnimationWithDuration:(CGFloat)duration {
     CABasicAnimation *animateStroke;
     if (filling) {
@@ -175,30 +178,11 @@
             [progressLayer removeFromSuperlayer];
             progressLayer = nil;
             percent = 0.0;
-            [self addCALayerToPath:circlePath];
-//            CABasicAnimation *basicAnim = (CABasicAnimation *)anim;
-//            [basicAnim setValue:@(0.0) forKey:@"strokeStart"];
+            [self addProgressLayer];
         }
     }
 }
 
-//-(void)animationDidStart:(CAAnimation *)anim {
-//
-//}
-//-(void)reset
-//{
-//    CABasicAnimation *endAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-//    endAnimation.duration = 0.0;
-//    endAnimation.toValue = @(0.0);
-//    [endAnimation setRemovedOnCompletion:YES];
-//    [progressLayer addAnimation:endAnimation forKey:nil];
-//
-//    CABasicAnimation *startAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-//    startAnimation.duration = 0.0;
-//    startAnimation.toValue = @(0.0);
-//    [startAnimation setRemovedOnCompletion:YES];
-//    [progressLayer addAnimation:startAnimation forKey:nil];
-//}
 -(void)setStartingPercent:(CGFloat)numerator byDenominator:(CGFloat)denominator {
     percent = numerator/denominator;
     self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
