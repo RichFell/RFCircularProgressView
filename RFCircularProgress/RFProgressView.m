@@ -131,35 +131,37 @@
  :newPecent: New percent to move the progress bar to from scale of 0.0 to 1.0
  */
 -(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration{
-    NSLog(@"2: %.f", value);
     if (value) {
-        
-        [self addAnimationToValue:value withDuration:duration];
+        self.currentValue = value;
+        [self addAnimationWithDuration:duration];
         self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
 
-        if (value == self.totalValue) {
+        if (self.currentValue == self.totalValue) {
             filling = !filling;
+            if (filling) {
+                [progressLayer setStrokeStart:0.0];
+            }
         }
     }
 
 }
 
--(void)addAnimationToValue:(CGFloat)value withDuration:(CGFloat)duration {
-    CABasicAnimation *animateStrokeEnd;
+-(void)addAnimationWithDuration:(CGFloat)duration {
+    CABasicAnimation *animateStroke;
     if (filling) {
-        animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animateStroke = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     }
     else {
-        animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+        animateStroke = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
     }
-    animateStrokeEnd.duration = value == self.totalValue ? 0.0 : duration;
+    animateStroke.fillMode = kCAFillModeBoth;
+    animateStroke.duration = duration;
     startPoint = percent == 1.0 ? 0.0 : percent;
-    animateStrokeEnd.fromValue = @(startPoint);
-    percent = value/self.totalValue;
-    animateStrokeEnd.toValue   = @(percent);
-    animateStrokeEnd.fillMode = kCAFillModeBoth;
-    [animateStrokeEnd setRemovedOnCompletion:NO];
-    [progressLayer addAnimation:animateStrokeEnd forKey:nil];
+    animateStroke.fromValue = @(startPoint);
+    percent = self.currentValue/self.totalValue;
+    animateStroke.toValue = @(percent);
+    [animateStroke setRemovedOnCompletion:NO];
+    [progressLayer addAnimation:animateStroke forKey:nil];
 
 }
 

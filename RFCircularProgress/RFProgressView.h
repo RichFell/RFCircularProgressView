@@ -17,6 +17,7 @@ IB_DESIGNABLE
 @property IBInspectable UIColor *circleColor;
 @property IBInspectable float totalValue;
 @property IBInspectable float currentValue;
+@property IBInspectable BOOL counterClockwise;
 
 @property IBInspectable BOOL hidesInsetCircle;
 @property IBInspectable UIColor *insetCircleColor;

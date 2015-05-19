@@ -33,7 +33,7 @@
     RFProgressView *prog = [[RFProgressView alloc]initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
     prog.circleColor = [UIColor blueColor];
     prog.circleWidth = 2.0;
-    self.topView.totalValue = 4.0;
+    self.topView.totalValue = 2.0;
 //    [prog changePercent:8.0 byDenominator:10.0 withAnimationDuration:0.5];
     [self.view addSubview:prog];
 }
