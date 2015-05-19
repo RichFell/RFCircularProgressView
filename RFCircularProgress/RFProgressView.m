@@ -130,50 +130,35 @@
  :newPecent: New percent to move the progress bar to from scale of 0.0 to 1.0
  */
 -(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator withAnimationDuration:(CGFloat)duration{
-//    CABasicAnimation *animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-//    animateStrokeEnd.duration  = numerator == denominator ? 0.0 : duration;
-//    animateStrokeEnd.fromValue = @(self.percent);
-//    animateStrokeEnd.toValue   = [NSNumber numberWithFloat:numerator / denominator];
-//    animateStrokeEnd.fillMode = kCAFillModeBoth;
-//    [animateStrokeEnd setRemovedOnCompletion:NO];
-//    [progressLayer addAnimation:animateStrokeEnd forKey:nil];
-    if (numerator == denominator) {
-        filling = !filling;
-    }
-    if (filling) {
+    NSLog(@"2: %.f", numerator);
+    if (numerator) {
+        
         [self addAnimation:numerator byDenominator:denominator withDuration:duration];
+        self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
+
+        if (numerator == denominator) {
+            filling = !filling;
+        }
     }
-    else {
-        [self removeAnimation:numerator byDenominator:denominator withDuration:duration];
-    }
-    self.percent = numerator/denominator;
-    self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
+
 }
 
 -(void)addAnimation:(CGFloat)numerator byDenominator:(CGFloat)denominator withDuration:(CGFloat)duration {
-    CABasicAnimation *animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    CABasicAnimation *animateStrokeEnd;
+    if (filling) {
+        animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    }
+    else {
+        animateStrokeEnd = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+    }
     animateStrokeEnd.duration  = numerator == denominator ? 0.0 : duration;
-    animateStrokeEnd.fromValue = @(self.percent);
-    animateStrokeEnd.toValue   = [NSNumber numberWithFloat:numerator / denominator];
+    startPoint = self.percent == 1.0 ? 0.0 : self.percent;
+    animateStrokeEnd.fromValue = @(startPoint);
+    self.percent = numerator/denominator;
+    animateStrokeEnd.toValue   = @(self.percent);
     animateStrokeEnd.fillMode = kCAFillModeBoth;
     [animateStrokeEnd setRemovedOnCompletion:NO];
     [progressLayer addAnimation:animateStrokeEnd forKey:nil];
-
-}
-
--(void)removeAnimation:(CGFloat)numerator byDenominator:(CGFloat)denominator withDuration:(CGFloat)duration {
-    CABasicAnimation *animateStrokeStart = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-    animateStrokeStart.duration = duration;
-    if (numerator == denominator) {
-        startPoint = 0.0;
-    }
-    animateStrokeStart.fromValue = @(startPoint);
-    animateStrokeStart.toValue = @(numerator/denominator);
-    startPoint = numerator/denominator;
-    animateStrokeStart.fillMode = kCAFillModeBoth;
-    [animateStrokeStart setRemovedOnCompletion:NO];
-    [progressLayer addAnimation:animateStrokeStart forKey:nil];
-
 
 }
 

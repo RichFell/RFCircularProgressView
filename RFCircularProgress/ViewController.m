@@ -30,8 +30,9 @@ static CGFloat const denominator = 10.0;
     bottomViewCount = 3.0;
 
     self.topView.percent = 0.0;
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:YES];
+//    NSTimer *newTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:YES];
 
+//    [newTimer fire];
     RFProgressView *prog = [[RFProgressView alloc]initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
     prog.circleColor = [UIColor blueColor];
     prog.circleWidth = 2.0; 
@@ -40,14 +41,15 @@ static CGFloat const denominator = 10.0;
 }
 
 -(void)drawBez {
-    if (countdown < denominator) {
-        [self.topView changePercent:++countdown byDenominator:denominator withAnimationDuration:1.0];
-    }
-    else {
-        countdown = 0.0;
-        [self.bottomView changePercent:++bottomViewCount byDenominator:12.0 withAnimationDuration:60.0];
-    }
 
+}
+- (IBAction)increasePercentOnTap:(UIButton *)sender {
+    NSLog(@"1: %.f", countdown);
+    [self.topView changePercent:++countdown byDenominator:denominator withAnimationDuration:0.95];
+    if (countdown == denominator) {
+        countdown = 0;
+    }
+    NSLog(@"3: %.f", countdown);
 }
 
 @end

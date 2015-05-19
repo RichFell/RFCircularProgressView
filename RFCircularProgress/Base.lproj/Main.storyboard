@@ -83,6 +83,9 @@
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="increasePercentOnTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2eh-ZF-wqT"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
