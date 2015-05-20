@@ -9,7 +9,7 @@
 #import "ViewController.h"
 @import RFCircularProgressKit;
 
-@interface ViewController ()
+@interface ViewController ()<RFProgressViewDelegate>
 @property (weak, nonatomic) IBOutlet RFProgressView *topView;
 @property (weak, nonatomic) IBOutlet RFProgressView *bottomView;
 
@@ -24,17 +24,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    countdown = 0.0;
+    countdown = 1.0;
     bottomViewCount = 3.0;
 
+    self.topView.delegate = self;
 //    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:YES];
 
 //    [newTimer fire];
     RFProgressView *prog = [[RFProgressView alloc]initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
     prog.circleColor = [UIColor blueColor];
     prog.circleWidth = 2.0;
-    self.topView.totalValue = 2.0;
-    self.topView.currentValue = 1.0;
+//    self.topView.totalValue = 2.0;
+//    self.topView.currentValue = 1.0;
 //    [prog changePercent:8.0 byDenominator:10.0 withAnimationDuration:0.5];
     [self.view addSubview:prog];
 }
@@ -51,6 +52,14 @@
     if (countdown == self.topView.totalValue) {
         countdown = 0;
     }
+}
+
+-(float)startingValueForProgressView:(RFProgressView *)view {
+    return countdown;
+}
+
+-(float)totalValueForProgressView:(RFProgressView *)view {
+    return 2.0;
 }
 
 @end

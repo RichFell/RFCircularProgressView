@@ -62,6 +62,8 @@
     startAngle = M_PI * 1.5;
     endAngle = startAngle + (M_PI * 2);
     filling = YES;
+    self.currentValue = inIB ? self.currentValue : [self.delegate startingValueForProgressView:self];
+    self.totalValue = inIB ? self.totalValue : [self.delegate totalValueForProgressView:self];
     float circWidth = self.circleWidth ? self.circleWidth : 1.0;
 
     circlePath = [UIBezierPath bezierPath];
@@ -140,7 +142,7 @@
 -(void)addProgressLayer {
     progressLayer = [[CAShapeLayer alloc] init];
 
-    CGFloat complete = inIB ? self.currentValue/self.totalValue : 0.0;
+    CGFloat complete = inIB ? self.currentValue/self.totalValue : [self.delegate startingValueForProgressView:self]/[self.delegate totalValueForProgressView:self];
     [self addLayerToPath:circlePath withLayer:progressLayer withColor:self.circleColor andWidth:self.circleWidth andPercentCompleted: complete];
 
 }
