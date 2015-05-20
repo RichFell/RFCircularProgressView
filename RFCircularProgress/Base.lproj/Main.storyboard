@@ -24,7 +24,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="circleWidth">
-                                        <real key="value" value="51"/>
+                                        <real key="value" value="50"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percent">
                                         <real key="value" value="68"/>
@@ -44,6 +44,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="currentValue">
                                         <real key="value" value="6"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleLabelText" value="1"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VwO-I6-giQ" customClass="RFProgressView">
@@ -64,6 +65,7 @@
                                         <color key="value" red="0.16078431904315948" green="0.10588236153125763" blue="0.58431375026702881" alpha="1" colorSpace="deviceRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="hidesInsetCircle" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleLabelText" value="Hi"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KLa-t0-Q5T">

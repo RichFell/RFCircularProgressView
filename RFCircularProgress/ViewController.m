@@ -40,7 +40,6 @@
 }
 
 -(void)drawBez {
-
     [self increasePercentage];
 }
 - (IBAction)increasePercentOnTap:(UIButton *)sender {

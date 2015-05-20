@@ -7,16 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RFProgressView;
+
+@protocol RFProgressViewDelegate <NSObject>
+
+-(float)startingValueForProgressView:(RFProgressView *)view;
+-(float)totalValueForProgressView:(RFProgressView *)view;
+
+@end
 
 IB_DESIGNABLE
 @interface RFProgressView : UIView
+
+@property id<RFProgressViewDelegate>delegate;
 
 //Inspecatbles for the Circle
 @property IBInspectable CGFloat circleWidth;
 @property IBInspectable UIColor *circleColor;
 @property IBInspectable float totalValue;
 @property IBInspectable float currentValue;
-@property IBInspectable BOOL counterClockwise;
+@property IBInspectable BOOL continuous;
+//@property IBInspectable BOOL counterClockwise;
 
 @property IBInspectable BOOL hidesInsetCircle;
 @property IBInspectable UIColor *insetCircleColor;

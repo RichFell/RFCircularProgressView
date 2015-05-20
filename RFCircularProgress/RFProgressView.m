@@ -86,7 +86,10 @@
                                 clockwise:YES];
         [insetCirclePath setLineWidth:insetCircWidth];
 
-        [self addLayerToPath:insetCirclePath withLayer:[CAShapeLayer new] withColor:self.insetCircleColor andWidth:self.insetCircleWidth andPercentCompleted:1.0];
+        [self addLayerToPath:insetCirclePath withLayer:[CAShapeLayer new]
+                   withColor:self.insetCircleColor
+                    andWidth:self.insetCircleWidth
+         andPercentCompleted:1.0];
     }
 
     //Have to add this after the inset, or the insetCircle will be on top of the progressLayer
@@ -106,7 +109,8 @@
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOrigin, yOrigin, width, height)];
     self.titleLabel.textColor = self.titleLabelTextColor ? self.titleLabelTextColor : [UIColor blackColor];
     self.titleLabel.text = self.titleLabelText;
-    self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:self.titleLabelFontSize ? self.titleLabelFontSize : 30.0];
+    self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue"
+                                           size:self.titleLabelFontSize ? self.titleLabelFontSize : 30.0];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.backgroundColor = [UIColor clearColor];
     self.titleLabel.backgroundColor = self.titleLabelBackgroundColor ? self.titleLabelBackgroundColor : [UIColor clearColor];
@@ -127,7 +131,7 @@
     [self addAnimationWithDuration:duration];
     self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
 
-    if (self.currentValue == self.totalValue) {
+    if (self.currentValue == self.totalValue && self.continuous) {
         filling = !filling;
     }
 }
@@ -174,7 +178,7 @@
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if (flag) {
-        if (percent == 1.0 && filling) {
+        if (percent == 1.0 && filling && self.continuous) {
             [progressLayer removeFromSuperlayer];
             progressLayer = nil;
             percent = 0.0;
