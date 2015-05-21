@@ -42,7 +42,6 @@
     [self increasePercentage];
 }
 - (IBAction)increasePercentOnTap:(UIButton *)sender {
-//    [self increasePercentage];
     self.topView.currentValue = ++countdown;
 }
 
