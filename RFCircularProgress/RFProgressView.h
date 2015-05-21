@@ -46,6 +46,5 @@ IB_DESIGNABLE
  :duration: The desired duration of the animation
  */
 -(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration;
-//-(void)moveToValue:(CGFloat)value;
 
 @end

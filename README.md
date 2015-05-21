@@ -11,13 +11,15 @@ How to use in IB:
   
 Available Customizations:
 
-  Progress Bar - Color, Width, Percent completed
+  Progress Bar - Color, Width, Current Value, Total Value, if once a rotation is complete, it will continuously rotate, clearing the full bar, then refilling it. 
   
   Inset Bar- Appearance, Color, Width
   
   Label- Font size, text, background color, text color
   
 Usage:
+
+    It is important to make sure that the currentValue, and totalValue are set for the progress bar before trying to use it. 
 
   -(void)changePercent:(CGFloat)numerator byDenominator:(CGFloat)denominator
     
