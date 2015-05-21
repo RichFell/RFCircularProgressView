@@ -19,7 +19,6 @@
     UIBezierPath *insetCirclePath;
     CGFloat startPoint;
     BOOL filling;
-    CGFloat percent;
     BOOL inIB;
 }
 
