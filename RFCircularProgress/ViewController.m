@@ -9,7 +9,7 @@
 #import "ViewController.h"
 @import RFCircularProgressKit;
 
-@interface ViewController ()<RFProgressViewDelegate>
+@interface ViewController ()
 @property (weak, nonatomic) IBOutlet RFProgressView *topView;
 @property (weak, nonatomic) IBOutlet RFProgressView *bottomView;
 
@@ -26,8 +26,9 @@
 
     countdown = 1.0;
     bottomViewCount = 3.0;
+    self.topView.currentValue = countdown;
+    self.topView.totalValue = 4.0;
 
-    self.topView.delegate = self;
 //    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(drawBez) userInfo:nil repeats:YES];
 
 //    [newTimer fire];
@@ -41,7 +42,8 @@
     [self increasePercentage];
 }
 - (IBAction)increasePercentOnTap:(UIButton *)sender {
-    [self increasePercentage];
+//    [self increasePercentage];
+    self.topView.currentValue = ++countdown;
 }
 
 -(void)increasePercentage {
@@ -50,14 +52,4 @@
         countdown = 0;
     }
 }
-
-#pragma mark - Delegate methods for setting the progressView.
--(float)startingValueForProgressView:(RFProgressView *)view {
-    return countdown;
-}
-
--(float)totalValueForProgressView:(RFProgressView *)view {
-    return 2.0;
-}
-
 @end

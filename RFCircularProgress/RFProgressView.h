@@ -9,24 +9,18 @@
 #import <UIKit/UIKit.h>
 @class RFProgressView;
 
-@protocol RFProgressViewDelegate <NSObject>
-
--(float)startingValueForProgressView:(RFProgressView *)view;
--(float)totalValueForProgressView:(RFProgressView *)view;
-
-@end
-
 IB_DESIGNABLE
 @interface RFProgressView : UIView
 
-@property id<RFProgressViewDelegate>delegate;
 
 //Inspecatbles for the Circle
 @property IBInspectable CGFloat circleWidth;
 @property IBInspectable UIColor *circleColor;
 @property IBInspectable float totalValue;
-@property IBInspectable float currentValue;
+@property IBInspectable (nonatomic) float currentValue;
 @property IBInspectable BOOL continuous;
+
+@property (readonly)CGFloat percentComplete;
 //@property IBInspectable BOOL counterClockwise;
 
 @property IBInspectable BOOL hidesInsetCircle;
@@ -52,7 +46,6 @@ IB_DESIGNABLE
  :duration: The desired duration of the animation
  */
 -(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration;
-
--(void)setStartingPercent: (CGFloat)numerator byDenominator:(CGFloat)denominator;
+//-(void)moveToValue:(CGFloat)value;
 
 @end

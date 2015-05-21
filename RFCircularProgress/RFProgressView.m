@@ -20,6 +20,18 @@
     CGFloat startPoint;
     BOOL filling;
     BOOL inIB;
+    CGFloat lastPercent;
+}
+
+-(CGFloat)percentComplete {
+    return self.currentValue/self.totalValue;
+}
+
+-(void)setCurrentValue:(float)currentValue {
+    startPoint = self.percentComplete == 1.0 ? 0.0 : self.percentComplete;
+    _currentValue = currentValue;
+    [self moveToValue];
+    self.titleLabel.text = [NSString stringWithFormat:@"%.f", currentValue];
 }
 
 -(void)awakeFromNib {
@@ -61,8 +73,8 @@
     startAngle = M_PI * 1.5;
     endAngle = startAngle + (M_PI * 2);
     filling = YES;
-    self.currentValue = inIB ? self.currentValue : [self.delegate startingValueForProgressView:self];
-    self.totalValue = inIB ? self.totalValue : [self.delegate totalValueForProgressView:self];
+//    self.currentValue = inIB ? self.currentValue : [self.delegate startingValueForProgressView:self];
+//    self.totalValue = inIB ? self.totalValue : [self.delegate totalValueForProgressView:self];
     float circWidth = self.circleWidth ? self.circleWidth : 1.0;
 
     circlePath = [UIBezierPath bezierPath];
@@ -127,7 +139,6 @@
  :duration: The duration of the desired animation
  */
 -(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration{
-
     self.currentValue = value;
     [self addAnimationWithDuration:duration];
     self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
@@ -140,9 +151,8 @@
 #pragma mark - Methods for drawing a layer on top of the Bezier path
 -(void)addProgressLayer {
     progressLayer = [[CAShapeLayer alloc] init];
-
-    CGFloat complete = inIB ? self.currentValue/self.totalValue : [self.delegate startingValueForProgressView:self]/[self.delegate totalValueForProgressView:self];
-    [self addLayerToPath:circlePath withLayer:progressLayer withColor:self.circleColor andWidth:self.circleWidth andPercentCompleted: complete];
+    startPoint = self.percentComplete;
+    [self addLayerToPath:circlePath withLayer:progressLayer withColor:self.circleColor andWidth:self.circleWidth andPercentCompleted: self.percentComplete];
 
 }
 
@@ -168,10 +178,8 @@
     }
     animateStroke.fillMode = kCAFillModeBoth;
     animateStroke.duration = duration;
-    startPoint = percent == 1.0 ? 0.0 : percent;
     animateStroke.fromValue = @(startPoint);
-    percent = self.currentValue/self.totalValue;
-    animateStroke.toValue = @(percent);
+    animateStroke.toValue = @(self.percentComplete);
     [animateStroke setRemovedOnCompletion:NO];
     animateStroke.delegate = self;
     [progressLayer addAnimation:animateStroke forKey:nil];
@@ -179,19 +187,18 @@
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if (flag) {
-        if (percent == 1.0 && filling && self.continuous) {
+        if (self.percentComplete == 1.0 && filling && self.continuous) {
             [progressLayer removeFromSuperlayer];
             progressLayer = nil;
-            percent = 0.0;
+            self.currentValue = 0.0;
             [self addProgressLayer];
         }
     }
 }
 
--(void)setStartingPercent:(CGFloat)numerator byDenominator:(CGFloat)denominator {
-    percent = numerator/denominator;
-    self.titleLabel.text = [NSString stringWithFormat:@"%.f", numerator];
-    [self drawCircle];
+-(void)moveToValue{
+//    startPoint = self.percentComplete;
+    [self addAnimationWithDuration:0.0];
 }
 
 @end
