@@ -21,6 +21,7 @@
     BOOL filling;
     BOOL inIB;
     CGFloat lastPercent;
+    BOOL animating;
 }
 
 -(CGFloat)percentComplete {
@@ -30,8 +31,11 @@
 -(void)setCurrentValue:(float)currentValue {
     startPoint = self.percentComplete == 1.0 ? 0.0 : self.percentComplete;
     _currentValue = currentValue;
-    [self moveToValue];
-    self.titleLabel.text = [NSString stringWithFormat:@"%.f", currentValue];
+    if (!animating) {
+        [self moveToValue];
+        self.titleLabel.text = [NSString stringWithFormat:@"%.f", currentValue];
+    }
+
 }
 
 -(void)awakeFromNib {
@@ -131,14 +135,8 @@
 }
 
 #pragma mark - Instance Method for animating the completion
-/**
- Description: Animates the Progress bar to the given percent
-
- :value: The Value you want the progressView to animate to
-
- :duration: The duration of the desired animation
- */
 -(void)changeToValue:(CGFloat)value withAnimationDuration:(CGFloat)duration{
+    animating = true;
     self.currentValue = value;
     [self addAnimationWithDuration:duration];
     self.titleLabel.text = [NSString stringWithFormat:@"%.f", value];
@@ -152,7 +150,11 @@
 -(void)addProgressLayer {
     progressLayer = [[CAShapeLayer alloc] init];
     startPoint = self.percentComplete;
-    [self addLayerToPath:circlePath withLayer:progressLayer withColor:self.circleColor andWidth:self.circleWidth andPercentCompleted: self.percentComplete];
+    [self addLayerToPath:circlePath
+               withLayer:progressLayer
+               withColor:self.circleColor
+                andWidth:self.circleWidth
+     andPercentCompleted: self.percentComplete];
 
 }
 
@@ -198,6 +200,7 @@
 
 -(void)moveToValue{
 //    startPoint = self.percentComplete;
+    animating = false;
     [self addAnimationWithDuration:0.0];
 }
 
